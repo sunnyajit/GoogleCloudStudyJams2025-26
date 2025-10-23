@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Badges</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  color: #1f6feb;
+  font-weight: bold;
+  font-size: 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+/* Grid container */
+.grid {
+  display: grid;
+  width: 100%;
+  max-width: 800px;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+/* Badge styles */
+.badge-box {
+  color:white;
+  border-radius:12px;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform 0.3s, box-shadow 0.5s, background 0.5s;
+  background: linear-gradient(45deg, #3498db, #9b59b6);
+  background-size: 400% 400%;
+  animation: badgeBG 8s ease infinite;
+  text-shadow:1px 1px 2px rgba(0,0,0,0.3);
+  padding: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  aspect-ratio: 1 / 1; /* perfect square */
+}
+.badge-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+}
+
+.separator {
+  width: 80%;
+  border: 1px solid rgba(255,255,255,0.5);
+  margin: 20px 0;
+}
+
+.pagination {
+  text-align:center;
+  margin-bottom:20px;
+}
+.page-btn {
+  cursor:pointer;
+  padding:8px 14px;
+  margin:3px;
+  border:1px solid white;
+  border-radius:6px;
+  color:white;
+  background: rgba(0,0,0,0.2);
+  font-weight:bold;
+  transition:0.3s;
+}
+.page-btn.active, .page-btn:hover { background:white; color:#1f6feb; }
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:15px;
+  font-size:16px;
+  color:white;
+  background: rgba(0,0,0,0.2);
+}
+
+/* Animations */
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+@keyframes badgeBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* Mobile responsive */
+@media(max-width: 768px){
+  .grid {
+    grid-template-columns: repeat(1, 1fr); /* single column for mobile */
+    gap: 15px;
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+Google Cloud Study jams 2025-2026
+</header>
+
+<main>
+<div class="grid" id="badgeGrid"></div>
+
+<div class="separator"></div>
+<div class="pagination" id="pagination"></div>
+</main>
+
+<footer>
+This webpage made by TechLead Sunny 
+</footer>
+
+<script>
+const badges = [
+  { name:"The Basics of Google Cloud Compute", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFZUnmYfGkMAUxGCBEyP8nKx" },
+  { name:"Get Started with Cloud Storage", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbJVVS2nsjvu7baetHpwixk" },
+  { name:"Get Started with Pub/Sub", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFZGgtjo6UWYHgsKv8UuaknK" },
+  { name:"Get Started with API Gateway", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbCGuz8Xa4fH8mAxUsFfXb2" },
+  { name:"Get Started with Looker", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFZc5l3dScUgv6q4ZJ2k8XDg" },
+  { name:"Get Started with Dataplex", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbWFEDLsBa-C0qbjQyExeI6" },
+  { name:"Get Started with Google Workspace Tools", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFYljo63lE4rj-VYElhRAGxK" },
+  { name:"App Building with Appsheet", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFavBBs7KUCIG61bjdvryMH7" },
+  { name:"Develop with Apps Script and AppSheet", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFawqH2RxI2uGz3qdfTcTJNx" },
+  { name:"Build a Website on Google Cloud", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbYZf8quWVZ6DVH1MbFyUjV" },
+  { name:"Set Up a Google Cloud Network", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbdYwkCXbVqFJ5lXEsWjslJ" },
+  { name:"Store, Process, and Manage Data on Google Cloud - Console", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFYpHc0n44kN7TRBvBvk0XFe" },
+  { name:"Cloud Functions: 3 Ways", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFYJu5IGXb0G42-bih8SE82d" },
+  { name:"App Engine: 3 Ways", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFalrNP0kQZNt3-FGruLcnWY" },
+  { name:"Cloud Speech API: 3 Ways", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFa9CPvVL59kw45c9SsyJTal" },
+  { name:"Monitoring in Google Cloud", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbfN2sVWDwT5VvOTkAZhoKA" },
+  { name:"Analyze Speech and Language with Google APIs", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbj0uP6A5912ErFLohuNQqy" },
+  { name:"Prompt Design in Vertex AI", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFb79wRCWu_d_GKNXvld5ZhI" },
+  { name:"Develop GenAI Apps with Gemini and Streamlit", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFbWVnjEO7K3CgaHZjEiBgV7" },
+  { name:"Level 3: Generative AI | Google Cloud Skills Boost", url:"https://www.youtube.com/playlist?list=PLzJwCIvZuAFYMoPpXM8CIx10hPmHiifyY" }
+];
+
+const badgeColors = ["#1abc9c","#3498db","#9b59b6","#e67e22","#e74c3c","#f1c40f","#2ecc71","#34495e","#16a085","#2980b9","#8e44ad","#d35400","#c0392b","#f39c12","#27ae60","#7f8c8d","#2c3e50","#d91e18","#f06292","#6a1b9a"];
+
+const badgesPerPage = 4; 
+let currentPage = 1;
+const totalPages = Math.ceil(badges.length / badgesPerPage);
+
+const grid = document.getElementById('badgeGrid');
+const pagination = document.getElementById('pagination');
+
+function renderBadges() {
+  grid.innerHTML="";
+  const start=(currentPage-1)*badgesPerPage;
+  const end=start+badgesPerPage;
+  badges.slice(start,end).forEach((badge,index)=>{
+    const div=document.createElement('div');
+    div.className='badge-box';
+    div.innerHTML = badge.name;
+    div.style.backgroundColor=badgeColors[(start+index)%badgeColors.length];
+    div.addEventListener('click',()=>window.open(badge.url,"_blank"));
+    grid.appendChild(div);
+  });
+}
+
+function renderPagination() {
+  pagination.innerHTML="";
+  for(let i=1;i<=totalPages;i++){
+    const btn=document.createElement('span');
+    btn.className='page-btn'+(i===currentPage?' active':'');
+    btn.textContent=i;
+    btn.addEventListener('click',()=>{currentPage=i; renderBadges(); renderPagination();});
+    pagination.appendChild(btn);
+  }
+}
+
+renderBadges();
+renderPagination();
+</script>
+</body>
+</html>
